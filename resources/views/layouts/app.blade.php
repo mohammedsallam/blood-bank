@@ -1,6 +1,8 @@
 @if(auth()->check())
 
 @include('layouts.head')
+@include('layouts.overlay')
+@include('layouts.loader')
 @include('layouts.body-start')
 @include('layouts.wrapper-start')
 @include('layouts.header')

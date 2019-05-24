@@ -19,7 +19,7 @@ Route::resource('governments', 'GovernmentsController');
 Route::resource('cities', 'CitiesController');
 Route::resource('categories', 'CategoriesController');
 Route::resource('clients', 'ClientsController');
-Route::any('search', 'ClientsController@search');
+Route::resource('posts', 'PostsController');
 
 
 Auth::routes();

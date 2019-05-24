@@ -29,6 +29,7 @@
             <li><a href="{{url(route('governments.index'))}}"><i class="fa fa-list"></i> <span>Governments</span></a></li>
             <li><a href="{{url(route('cities.index'))}}"><i class="fa fa-home"></i> <span>Cities</span></a></li>
             <li><a href="{{url(route('categories.index'))}}"><i class="fa fa-list"></i> <span>Categories</span></a></li>
+            <li><a href="{{url(route('posts.index'))}}"><i class="fa fa-pencil"></i> <span>Posts</span></a></li>
             <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Settings</span></a></li>
         </ul>
     </section>

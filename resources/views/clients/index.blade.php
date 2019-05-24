@@ -38,7 +38,7 @@
                 </div>
                 <div class="panel-body">
 
-                    {!! Form::model($client, ['action' => ['ClientsController@search'], 'method' => 'post']) !!}
+                    {!! Form::model($client, ['route' => ['clients.index'], 'method' => 'get']) !!}
 
                     <div class="form-group">
                         <select name="government" class="form-control">
@@ -69,7 +69,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        <h4 class="text-bold">Search in : <small><b class="text-danger">name, email, or phone ( Required * )</b></small></h4>
+                        <h4 class="text-bold">Search in : <small><b class="text-red">name, email, or phone ( Required * )</b></small></h4>
                     </h3>
                 </div>
                 <div class="panel-body">

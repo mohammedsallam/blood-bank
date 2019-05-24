@@ -8,13 +8,43 @@ use App\Models\Client;
 class ClientsController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function index()
+    public function index(Request $request)
     {
-        $records = Client::paginate(20);
+        if ($request->has('search')){
+            $rules = [
+
+                'search' => ['required'],
+                'government' => ['nullable'],
+                'city' => ['nullable'],
+                'blood' => ['nullable'],
+            ];
+
+
+            $this->validate($request, $rules);
+
+            $records = Client::whereHas('government', function($query) use ($request){
+                $query->where('governments.name', 'LIKE', "%$request->government%");
+            })
+
+                ->whereHas('city', function($query) use ($request){
+                    $query->where('cities.name', 'LIKE', "%$request->city%");
+                })
+                ->whereHas('bloodType', function($query) use ($request){
+                    $query->where('blood_types.name', 'LIKE', "%$request->blood%");
+                })
+                ->where('name','LIKE', "%$request->search%")
+                ->orWhere('phone', 'LIKE', "%$request->search%")
+                ->orWhere('email', 'LIKE', "%$request->search%")
+                ->paginate(20);
+
+        } else {
+
+            $records = Client::paginate(20);
+        }
 
         return view('clients.index', compact('records'));
     }
@@ -71,42 +101,5 @@ class ClientsController extends Controller
         return redirect(route('clients.index'))->with('success', 'Client deleted successfully');
     }
 
-
-    /**
-     * Clients search
-     * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     * @throws \Illuminate\Validation\ValidationException
-     */
-    public function search(Request $request)
-    {
-        $rules = [
-
-            'search' => ['required'],
-            'government' => ['nullable'],
-            'city' => ['nullable'],
-            'blood' => ['nullable'],
-        ];
-
-
-        $this->validate($request, $rules);
-
-        $records = Client::whereHas('government', function($query) use ($request){
-            $query->where('governments.name', 'LIKE', "%$request->government%");
-        })
-
-            ->whereHas('city', function($query) use ($request){
-            $query->where('cities.name', 'LIKE', "%$request->city%");
-        })
-            ->whereHas('bloodType', function($query) use ($request){
-            $query->where('blood_types.name', 'LIKE', "%$request->blood%");
-        })
-            ->where('name','LIKE', "%$request->search%")
-            ->orWhere('phone', 'LIKE', "%$request->search%")
-            ->orWhere('email', 'LIKE', "%$request->search%")
-            ->paginate(20);
-
-        return view('clients.index', compact('records'));
-    }
 
 }
