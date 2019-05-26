@@ -84,7 +84,7 @@ class ClientsController extends Controller
 
         $model->save();
 
-        return redirect(route('clients.index'))->with('success', 'Client updated successfully');
+        return responseJson(1, 'Client ' . $model->id . ' updated successfully');
     }
 
 
@@ -98,7 +98,7 @@ class ClientsController extends Controller
     {
         $record = Client::findOrFail($id);
         $record->delete();
-        return redirect(route('clients.index'))->with('success', 'Client deleted successfully');
+        return responseJson(1, 'Client ' . $record->id . ' deleted successfully');
     }
 
 

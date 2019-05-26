@@ -26,11 +26,11 @@
                 </tr>
                 <tr>
                     <th>Post content</th>
-                    <td>{{$post->body}}</td>
+                    <td><textarea disabled cols="100" rows="10">{{$post->body}}</textarea></td>
                 </tr>
                 <tr>
                     <th>Post category</th>
-                    <td>{{$post->category->id}}</td>
+                    <td>{{$post->category->name}}</td>
                 </tr>
                 <tr>
                     <th>Post image</th>

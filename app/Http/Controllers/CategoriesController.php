@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CategoriesController extends Controller
 {
@@ -47,11 +48,15 @@ class CategoriesController extends Controller
             'name.required' => 'Category name is required'
         ];
 
-        $this->validate($request, $rules, $messages);
+        $validation = Validator::make($request->all(),$rules, $messages);
+
+        if ($validation->fails()){
+            return responseJson(0, $validation->messages()->first(), $validation->messages());
+        }
 
         Category::create($request->all());
 
-        return redirect(route('categories.index'))->with('success', 'Category added successfully');
+        return responseJson(1, 'Category created successfully');
 
     }
 
@@ -63,7 +68,8 @@ class CategoriesController extends Controller
      */
     public function show($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -74,9 +80,7 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        $model = Category::findOrFail($id);
 
-        return view('categories.edit', compact('model'));
     }
 
     /**
@@ -97,13 +101,17 @@ class CategoriesController extends Controller
             'name.required' => 'Category name is required'
         ];
 
-        $this->validate($request, $rules, $messages);
+        $validation = Validator::make($request->all(),$rules, $messages);
+
+        if ($validation->fails()){
+            return responseJson(0, $validation->messages()->first(), $validation->messages());
+        }
 
         $record = Category::findOrFail($id);
 
         $record->update($request->all());
 
-        return redirect(route('categories.index'))->with('success', 'Category updated successfully');
+        return responseJson(1, 'Category updated successfully');
 
     }
 
@@ -117,6 +125,6 @@ class CategoriesController extends Controller
     {
         $record = Category::findOrFail($id);
         $record->delete();
-        return redirect(route('categories.index'))->with('success', 'category deleted successfully');
+        return responseJson(1, 'Category ' . $record->id . ' deleted successfully');
     }
 }

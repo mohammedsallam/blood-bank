@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Government;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class GovernmentsController extends Controller
 {
@@ -47,11 +48,15 @@ class GovernmentsController extends Controller
             'name.required' => 'Government name is required'
         ];
 
-        $this->validate($request, $rules, $messages);
+        $validation = Validator::make($request->all(),$rules, $messages);
+
+        if ($validation->fails()){
+            return responseJson(0, $validation->messages()->first(), $validation->messages());
+        }
 
         Government::create($request->all());
 
-        return redirect(route('governments.index'))->with('success', 'Government added successfully');
+        return responseJson(1, 'Government created successfully');
 
     }
 
@@ -63,7 +68,9 @@ class GovernmentsController extends Controller
      */
     public function show($id)
     {
-        //
+        $government = Government::findOrFail($id);
+
+        return view('governments.edit', compact('government'));
     }
 
     /**
@@ -97,13 +104,17 @@ class GovernmentsController extends Controller
             'name.required' => 'Government name is required'
         ];
 
-        $this->validate($request, $rules, $messages);
+        $validation = Validator::make($request->all(),$rules, $messages);
+
+        if ($validation->fails()){
+            return responseJson(0, $validation->messages()->first(), $validation->messages());
+        }
 
         $record = Government::findOrFail($id);
 
         $record->update($request->all());
 
-        return redirect(route('governments.index'))->with('success', 'Government updated successfully');
+        return responseJson(1, 'Government updated successfully');
 
     }
 
@@ -117,6 +128,6 @@ class GovernmentsController extends Controller
     {
         $record = Government::findOrFail($id);
         $record->delete();
-        return redirect(route('governments.index'))->with('success', 'Government deleted successfully');
+        return responseJson(1, 'Government ' . $record->id . ' deleted successfully');
     }
 }

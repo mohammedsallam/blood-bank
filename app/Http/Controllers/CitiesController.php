@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\City;
 use App\Models\Government;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CitiesController extends Controller
 {
@@ -52,11 +53,15 @@ class CitiesController extends Controller
             'government_id.required' => 'Government name is required'
         ];
 
-        $this->validate($request, $rules, $messages);
+        $validation = Validator::make($request->all(),$rules, $messages);
+
+        if ($validation->fails()){
+            return responseJson(0, $validation->messages()->first(), $validation->messages());
+        }
 
         City::create($request->all());
 
-        return redirect(route('cities.index'))->with('success', 'City added successfully');
+        return responseJson(1, 'City created successfully');
 
     }
 
@@ -68,7 +73,9 @@ class CitiesController extends Controller
      */
     public function show($id)
     {
-        //
+        $city = City::findOrFail($id);
+        $governments = Government::all();
+        return view('cities.edit', compact(['city', 'governments']));
     }
 
     /**
@@ -101,17 +108,21 @@ class CitiesController extends Controller
 
         $messages = [
 
-            'name.required' => 'Government name is required',
+            'name.required' => 'City name is required',
             'government_id.required' => 'Government name is required'
         ];
 
-        $this->validate($request, $rules, $messages);
+        $validation = Validator::make($request->all(),$rules, $messages);
+
+        if ($validation->fails()){
+            return responseJson(0, $validation->messages()->first(), $validation->messages());
+        }
 
         $record = City::findOrFail($id);
 
         $record->update($request->all());
 
-        return redirect(route('cities.index'))->with('success', 'City updated successfully');
+        return responseJson(1, 'City updated successfully');
 
     }
 
@@ -125,6 +136,6 @@ class CitiesController extends Controller
     {
         $record = City::findOrFail($id);
         $record->delete();
-        return redirect(route('cities.index'))->with('success', 'City deleted successfully');
+        return responseJson(1, 'City ' . $record->id .' deleted successfully');
     }
 }

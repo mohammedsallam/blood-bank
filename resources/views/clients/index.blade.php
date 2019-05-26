@@ -103,6 +103,12 @@
                     <h3 class="panel-title">List of Clients</h3>
                 </div>
                 <div class="panel-body">
+                    <div class="alert alert-success success_delete_msg hidden">
+                        <strong></strong>
+                    </div>
+                    <div class="alert alert-success error_delete_msg hidden">
+                        <strong></strong>
+                    </div>
                     <div class="table-responsive governments_rows">
                         <table class="table table-hover table-bordered">
                             <thead>
@@ -119,10 +125,10 @@
                                 <tr class="tr_{{$record->id}}">
                                     <td>{{$loop->iteration}}</td>
                                     <td>{{$record->name}}</td>
-                                    <td class="text-center"><a class="btn btn-<?php if($record->active == 1) {echo 'success'; } else {echo 'warning'; } ?> btn-sm" href="{{url(route('clients.edit', $record->id))}}"><i class="fa fa-<?php if($record->active == 1) {echo 'check'; } else {echo 'close'; } ?>"></i></a></td>
+                                    <td class="text-center"><a class="btn btn-<?php if($record->active == 1) {echo 'success'; } else {echo 'warning'; } ?> btn-sm active_client_link" href="{{url(route('clients.edit', $record->id))}}"><i class="fa fa-<?php if($record->active == 1) {echo 'check'; } else {echo 'close'; } ?>"></i></a></td>
                                     <td class="text-center">
-                                        {!! Form::open(['route' => ['clients.destroy', $record->id], 'method' => 'DELETE']) !!}
-                                        <button class="btn btn-danger btn-sm" onclick="if (!confirm('Do you want delete?')){ return false} "><i class="fa fa-trash-o"></i></button>
+                                        {!! Form::open(['route' => ['clients.destroy', $record->id], 'method' => 'DELETE', 'class' => 'delete_client_form']) !!}
+                                        <button class="btn btn-danger btn-sm delete_client_button" id="{{$record->id}}"><i class="fa fa-trash-o"></i></button>
                                         {!! Form::close() !!}
                                     </td>
                                     <td class="text-center"><a class="btn btn-primary btn-sm" href="{{url(route('clients.show', $record->id))}}"><i class="fa fa-angle-double-right"></i></a></td>

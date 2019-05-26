@@ -15,13 +15,18 @@ Route::get('/', function () {
     return redirect('login');
 });
 
-Route::resource('governments', 'GovernmentsController');
-Route::resource('cities', 'CitiesController');
-Route::resource('categories', 'CategoriesController');
-Route::resource('clients', 'ClientsController');
-Route::resource('posts', 'PostsController');
+Route::group(['middleware' => 'auth'], function () {
 
+    Route::resource('governments', 'GovernmentsController');
+    Route::resource('cities', 'CitiesController');
+    Route::resource('categories', 'CategoriesController');
+    Route::resource('clients', 'ClientsController');
+    Route::resource('posts', 'PostsController');
+    Route::resource('contacts', 'ContactsController');
+    Route::get('read', 'ContactsController@read')->name('read');
+    Route::get('trash', 'ContactsController@trash')->name('trash');
 
+});
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

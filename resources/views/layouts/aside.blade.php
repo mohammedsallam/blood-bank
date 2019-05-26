@@ -30,6 +30,19 @@
             <li><a href="{{url(route('cities.index'))}}"><i class="fa fa-home"></i> <span>Cities</span></a></li>
             <li><a href="{{url(route('categories.index'))}}"><i class="fa fa-list"></i> <span>Categories</span></a></li>
             <li><a href="{{url(route('posts.index'))}}"><i class="fa fa-pencil"></i> <span>Posts</span></a></li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-envelope"></i> <span>Mailbox</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{url(route('contacts.index'))}}"><i class="fa fa-inbox"></i> Inbox</a></li>
+                    <li><a href="{{url(route('read'))}}"><i class="fa fa-envelope-open"></i> Read</a></li>
+                    <li><a href="{{url(route('trash'))}}"><i class="fa fa-trash"></i> Trash</a></li>
+                </ul>
+            </li>
             <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Settings</span></a></li>
         </ul>
     </section>

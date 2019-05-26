@@ -115,7 +115,7 @@
                                     <td class="text-center"><img style="max-width: 100px" src="{{asset('images/posts/'.$record->id.'/'.$record->img)}}" alt=""></td>
                                     <td>{{$record->category->name}}</td>
                                     <td class="text-center">
-                                        <a class="btn btn-primary btn-sm posts_model_link" data-toggle="modal" data-target="#update_posts_modal" data-token="{{csrf_token()}}" data-href="{{url(route('posts.show', $record->id))}}"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-primary btn-sm posts_model_link" data-toggle="modal" data-target="#update_posts_modal" data-href="{{url(route('posts.show', $record->id))}}"><i class="fa fa-edit"></i></a>
                                     </td>
                                     <td class="text-center">
                                         {!! Form::open(['route' => ['posts.destroy', $record->id], 'method' => 'DELETE', 'class' => 'delete_post_form']) !!}
@@ -169,6 +169,7 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
 {{-- End update post modal --}}
 
 {{-- Start create post modal --}}

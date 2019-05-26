@@ -113,7 +113,7 @@ class PostsController extends Controller
         $categories = Category::all();
 
         if (request()->ajax()){
-            return view('posts.get-post', compact(['post', 'categories']));
+            return view('posts.edit', compact(['post', 'categories']));
         } else {
             return view('posts.show', compact(['post', 'categories']));
         }

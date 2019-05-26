@@ -1,32 +1,15 @@
-@extends('layouts.app')
-
-@section('content')
-
-@section('page_title')
-    Edit city
-@endsection
-
-@section('active_title')
-    Edit city
-@endsection
-
-
-<!-- Main content -->
-<section class="content">
-    @include('partials.messages')
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Edit city</h3>
-        </div>
-        <div class="panel-body">
-            {!! Form::model($model, ['route' => ['cities.update', $model->id], 'method' => 'PUT']) !!}
-{{--            {!! Form::hidden('_method', 'PUT') !!}--}}
-                @include('cities.form')
-            {!! Form::close() !!}
-        </div>
-    </div>
-
-</section>
-<!-- /.content -->
-
-@endsection
+{!! Form::open(['route' => ['cities.update', $city->id], 'method' => 'PUT',  'class' => 'update_city_form']) !!}
+<div class="form-group">
+    {!! Form::label('name', 'City name') !!}
+    {!! Form::text('name', $city->name, ['class' => 'form-control', 'placeholder' => 'City name']) !!}
+</div>
+<div class="form-group">
+    <label for="government_id">Government name</label>
+    <select name="government_id" id="government_id" class="form-control">
+        <option value="">Government name</option>
+        @foreach ($governments as $government)
+            <option value="{{$government->id}}" @if($government->id == $city->government_id) selected @endif>{{$government->name}}</option>
+        @endforeach
+    </select>
+</div>
+{!! Form::close() !!}
