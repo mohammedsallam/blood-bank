@@ -67,7 +67,7 @@
                             <i class="fa fa-square-o"></i>
                         </button>
                         <div class="btn-group">
-                            <button href="" class="btn btn-default btn-sm shift_delete">
+                            <button class="btn btn-default btn-sm shift_delete">
                                 <i class="fa fa-trash-o"></i> حذف نهائي
                             </button>
                         </div>
@@ -78,7 +78,7 @@
                     <div class="table-responsive mailbox-messages">
                         <table class="table table-hover table-striped">
                             <tbody>
-                            {!! Form::open(['route' => 'contacts.delete' , 'method' => 'DELETE', 'class' => 'delete_mail_form']) !!}
+                            {!! Form::open(['route' => 'contacts.shiftdelete' , 'method' => 'DELETE', 'class' => 'shift_delete_mail_form']) !!}
 
                             @if ($trash->count() > 0)
                                 @foreach ($trash as $item)
@@ -86,7 +86,8 @@
                                         <td>
                                             <input type="checkbox" name="id[]" class="check_delete" value="{{$item->id}}">
                                         </td>
-                                        <td><i class="fa fa-envelope-open text-dark mark_as_unread" style="cursor:pointer;" title="Mark as un read" data-id="{{$item->id}}" data-url="{{url(route('contacts.edit', $item->id))}}"></i></td>
+                                        <td><i class="fa fa-envelope text-yellow mark_as_unread_trash" style="cursor:pointer;" title="Mark as un read" data-id="{{$item->id}}" data-url="{{url(route('movetounread', $item->id))}}"></i></td>
+                                        <td><i class="fa fa-envelope-open text-dark mark_as_read_trash" style="cursor:pointer;" title="Mark as un read" data-id="{{$item->id}}" data-url="{{url(route('movetoread', $item->id))}}"></i></td>
                                         <td class="mailbox-name"><a href="{{url(route('contacts.show', $item->id))}}">{{$item->name}}</a></td>
                                         <td class="mailbox-subject"><b><a href="{{url(route('contacts.show', $item->id))}}">{{\Illuminate\Support\Str::limit($item->title, 50)}}</a></b>
                                         </td>

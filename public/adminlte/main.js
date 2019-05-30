@@ -882,6 +882,58 @@ $(document).ready(function () {
 
     });
 
+    /**
+     * Mark message as read
+     */
+
+    $('.mark_as_read_trash').click(function () {
+
+        var id = $(this).data('id'),
+            tr = $('.tr_'+id),
+            url = $(this).data('url'),
+            read = $('.read'),
+            trash = $('.trash');
+
+        tr.remove();
+
+        $.ajax({
+            url: url,
+            type: 'get',
+            success: function () {
+                read.html(Number(read.html()) + 1);
+                trash.html(Number(trash.html()) - 1);
+
+            }
+        });
+
+    });
+
+
+    /**
+     * Mark message as unread
+     */
+
+    $('.mark_as_unread_trash').click(function () {
+
+        var id = $(this).data('id'),
+            tr = $('.tr_'+id),
+            url = $(this).data('url'),
+            noRead = $('.no_read'),
+            trash = $('.trash');
+
+        tr.remove();
+
+        $.ajax({
+            url: url,
+            type: 'get',
+            success: function () {
+                trash.html(Number(trash.html()) - 1);
+                noRead.html(Number(noRead.html()) + 1);
+            }
+        });
+
+    });
+
 
     /**
      * Toggle checkbox select
@@ -924,7 +976,8 @@ $(document).ready(function () {
         var checkBoxId = $('input[type=checkbox]'),
             count = [],
             trash =$('.trash'),
-            noRead = $('.no_read');
+            noRead = $('.no_read'),
+            read = $('.read');
 
         checkBoxId.each(function () {
             if ($(this).prop('checked') === true){
@@ -934,8 +987,81 @@ $(document).ready(function () {
         });
 
         trash.html(Number(trash.html()) + count.length);
-        noRead.html(Number(noRead.html()) - count.length);
 
+        if(Number(noRead.html() !== '0')){
+
+            noRead.html('0');
+        }
+
+        if(Number(read.html() !== '0')){
+
+            read.html('0');
+        }
+
+
+        var formData = new FormData(form[0]),
+            url = form.attr('action');
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            crossDomain: true,
+            data: formData,
+
+            beforeSuccess: function(){
+                $('.loading, .overlay').fadeIn();
+            },
+
+            success: function (data) {
+
+                if (data.status === 1){
+
+                    $('.msg').removeClass('hidden alert-danger').addClass('alert-success').html(data.msg);
+
+                    var checkBoxId = $('input[type=checkbox]');
+
+                    checkBoxId.each(function () {
+                        if ($(this).prop('checked') === true){
+                            var trId = $('.tr_'+$(this).val());
+                            trId.remove();
+                        }
+                    });
+                } else {
+                    $('.msg').removeClass('hidden alert-success').addClass('alert-danger').html(data.msg);
+                }
+
+                $('.loading, .overlay').fadeOut();
+
+            }
+        });
+
+        trId.remove();
+
+
+    });
+
+    $('.shift_delete').click(function () {
+
+        var form = $('.shift_delete_mail_form');
+
+        form.submit(function (e) {
+            e.preventDefault();
+        });
+
+        var checkBoxId = $('input[type=checkbox]'),
+            count = [], trash = $('.trash');
+
+        checkBoxId.each(function () {
+            if ($(this).prop('checked') === true){
+                var trId = $('.tr_'+$(this).val());
+                count.push(trId);
+            }
+        });
+
+        trash.html(Number(trash.html()) - count.length);
 
         var formData = new FormData(form[0]),
             url = form.attr('action');

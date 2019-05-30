@@ -23,8 +23,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('clients', 'ClientsController');
     Route::resource('posts', 'PostsController');
     Route::resource('contacts', 'ContactsController');
-    Route::delete('contacts', 'ContactsController@delete')->name('contacts.delete');
+    Route::delete('delete', 'ContactsController@delete')->name('contacts.delete');
+    Route::delete('shift-delete', 'ContactsController@shiftDelete')->name('contacts.shiftdelete');
     Route::get('read', 'ContactsController@read')->name('read');
+    Route::get('movetoread/{id}', 'ContactsController@moveToRead')->name('movetoread');
+    Route::get('movetounread/{id}', 'ContactsController@moveToUnRead')->name('movetounread');
     Route::get('trash', 'ContactsController@trash')->name('trash');
 
 });

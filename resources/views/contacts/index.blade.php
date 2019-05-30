@@ -67,7 +67,7 @@
                             <i class="fa fa-square-o"></i>
                         </button>
                         <div class="btn-group">
-                            <button href="" class="btn btn-default btn-sm delete_all_button"><i class="fa fa-trash-o"></i></button>
+                            <button  class="btn btn-default btn-sm delete_all_button"><i class="fa fa-trash-o"></i></button>
                         </div>
                         <!-- /.btn-group -->
                         <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
@@ -120,57 +120,6 @@
             </div>
         </div>
     </div>
-    {{--<div class="panel panel-default col-lg-9">--}}
-        {{--<div class="panel-heading">--}}
-            {{--<h3 class="panel-title">List of Contacts</h3>--}}
-        {{--</div>--}}
-        {{--<div class="panel-body">--}}
-            {{--<div class="table-responsive governments_rows">--}}
-                    {{--<table class="table table-hover table-bordered">--}}
-                    {{--<thead>--}}
-                    {{--<tr>--}}
-                        {{--<th>#</th>--}}
-                        {{--<th>Name</th>--}}
-                        {{--<th>Email</th>--}}
-                        {{--<th>Phone</th>--}}
-                        {{--<th>Title</th>--}}
-                        {{--<th>Message content</th>--}}
-                        {{--<th class="text-center">Delete</th>--}}
-                        {{--<th class="text-center">Read</th>--}}
-                        {{--<th class="text-center">Mark as read</th>--}}
-                    {{--</tr>--}}
-                    {{--</thead>--}}
-                    {{--<tbody>--}}
-                    {{--@foreach ($contacts as $contact)--}}
-                        {{--<tr class="tr_{{$contact->id}}">--}}
-                            {{--<td>{{$loop->iteration}}</td>--}}
-                            {{--<td>{{$contact->name}}</td>--}}
-                            {{--<td>{{$contact->email}}</td>--}}
-                            {{--<td>{{$contact->phone}}</td>--}}
-                            {{--<td>{{$contact->title}}</td>--}}
-                            {{--<td>{{\Illuminate\Support\Str::limit($contact->body, 50)}}</td>--}}
-                            {{--<td class="text-center">--}}
-                                {{--{!! Form::open(['route' => ['contacts.destroy', $contact->id], 'method' => 'DELETE']) !!}--}}
-                                    {{--<button class="btn btn-danger btn-sm" onclick="if (!confirm('Do you want delete?')){ return false} "><i class="fa fa-trash-o"></i></button>--}}
-                                {{--{!! Form::close() !!}--}}
-                            {{--</td>--}}
-                            {{--<td class="text-center">--}}
-                                {{--<a class="btn btn-primary btn-sm" href="{{url(route('contacts.show', $contact->id))}}"><i class="fa fa-angle-double-right"></i></a>--}}
-                            {{--</td>--}}
-                            {{--<td class="text-center">--}}
-                                {{--<a class="btn btn-primary btn-sm" href="{{url(route('contacts.edit', $contact->id))}}"><i class="fa fa-eye"></i></a>--}}
-                            {{--</td>--}}
-                        {{--</tr>--}}
-
-                    {{--@endforeach--}}
-                    {{--</tbody>--}}
-                {{--</table>--}}
-                {{--<div class="text-center">--}}
-                    {{--{{$contacts->links()}}--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</div>--}}
-    {{--</div>--}}
 </section>
 <!-- /.content -->
 

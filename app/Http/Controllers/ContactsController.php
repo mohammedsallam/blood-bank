@@ -16,8 +16,8 @@ class ContactsController extends Controller
 
     public function index()
     {
-        $contacts = Contact::where('is_read', 0)->where('deleted_at', null)->paginate(20);
-        $reads = Contact::where('is_read', 1)->where('deleted_at', null)->paginate(20);
+        $contacts = Contact::where('is_read', 0)->where('deleted_at', 0)->paginate(20);
+        $reads = Contact::where('is_read', 1)->where('deleted_at', 0)->paginate(20);
         $trash = Contact::where('deleted_at', 1)->paginate(20);
         return view('contacts.index', compact(['contacts', 'reads', 'trash']));
     }
@@ -51,9 +51,27 @@ class ContactsController extends Controller
         if ($contact->is_read == 1){
 
             $contact->is_read = 0;
+            $contact->deleted_at = 0;
         } else {
             $contact->is_read = 1;
+            $contact->deleted_at = 0;
         }
+        $contact->save();
+    }
+
+    public function moveToRead($id)
+    {
+        $contact = Contact::findOrFail($id);
+        $contact->is_read = 1;
+        $contact->deleted_at = 0;
+        $contact->save();
+    }
+
+    public function moveToUnRead($id)
+    {
+        $contact = Contact::findOrFail($id);
+        $contact->is_read = 0;
+        $contact->deleted_at = 0;
         $contact->save();
     }
 
@@ -77,6 +95,19 @@ class ContactsController extends Controller
 
     }
 
+    public function shiftDelete(Request $request)
+    {
+        $ids = $request->id;
+
+        if (!empty($ids)){
+            $count = DB::table('contacts')->whereIn('id', $ids)->delete();
+            return responseJson(1, $count.' Messages deleted form trash');
+        } else {
+            return responseJson(0, 'No messages selected');
+        }
+
+    }
+
 
     /**
      * Show all read messages
@@ -85,8 +116,8 @@ class ContactsController extends Controller
 
     public function read()
     {
-        $contacts = Contact::where('is_read', 0)->where('deleted_at', null)->paginate(20);
-        $reads = Contact::where('is_read', 1)->where('deleted_at', null)->paginate(20);
+        $contacts = Contact::where('is_read', 0)->where('deleted_at', 0)->paginate(20);
+        $reads = Contact::where('is_read', 1)->where('deleted_at', 0)->paginate(20);
         $trash = Contact::where('deleted_at', 1)->paginate(20);
         return view('contacts.read', compact(['contacts', 'reads', 'trash']));
     }
@@ -98,8 +129,8 @@ class ContactsController extends Controller
 
     public function trash()
     {
-        $contacts = Contact::where('is_read', 0)->where('deleted_at', null)->paginate(20);
-        $reads = Contact::where('is_read', 1)->where('deleted_at', null)->paginate(20);
+        $contacts = Contact::where('is_read', 0)->where('deleted_at', 0)->paginate(20);
+        $reads = Contact::where('is_read', 1)->where('deleted_at', 0)->paginate(20);
         $trash = Contact::where('deleted_at', 1)->paginate(20);
         return view('contacts.trash', compact(['contacts', 'reads', 'trash']));
     }
