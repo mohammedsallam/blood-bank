@@ -23,10 +23,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('clients', 'ClientsController');
     Route::resource('posts', 'PostsController');
     Route::resource('contacts', 'ContactsController');
+    Route::delete('contacts', 'ContactsController@delete')->name('contacts.delete');
     Route::get('read', 'ContactsController@read')->name('read');
     Route::get('trash', 'ContactsController@trash')->name('trash');
 
 });
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

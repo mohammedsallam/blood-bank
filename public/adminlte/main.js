@@ -830,44 +830,155 @@ $(document).ready(function () {
     });
 
 
+    /**
+     * Mark message as read
+     */
+
     $('.mark_as_read').click(function () {
 
         var id = $(this).data('id'),
             tr = $('.tr_'+id),
-            url = $(this).data('url');
+            url = $(this).data('url'),
+            read = $('.read'),
+            noRead = $('.no_read');
+
+        tr.remove();
 
         $.ajax({
             url: url,
             type: 'get',
             success: function () {
-                tr.remove();
-                $('.read').html(Number($('.read').html()) + 1)
-                $('.no_read').html(Number($('.no_read').html()) - 1)
+                read.html(Number(read.html()) + 1);
+                noRead.html(Number(noRead.html()) - 1);
+
             }
         });
 
     });
+
+
+    /**
+     * Mark message as unread
+     */
 
     $('.mark_as_unread').click(function () {
 
         var id = $(this).data('id'),
             tr = $('.tr_'+id),
-            url = $(this).data('url');
+            url = $(this).data('url'),
+            read = $('.read'),
+            noRead = $('.no_read');
+
+        tr.remove();
 
         $.ajax({
             url: url,
             type: 'get',
             success: function () {
-                tr.remove();
-                $('.read').html(Number($('.read').html()) - 1)
-                $('.no_read').html(Number($('.no_read').html()) + 1)
+                read.html(Number(read.html()) - 1);
+                noRead.html(Number(noRead.html()) + 1);
             }
         });
 
     });
 
-    $('.delete_button').click(function () {
-        
+
+    /**
+     * Toggle checkbox select
+     */
+
+    $('.checkbox-toggle').click(function () {
+
+        var checkBox = $('input[type="checkbox"]');
+        if (checkBox.prop('checked') === true){
+            checkBox.removeAttr('checked');
+            checkBox.prop('checked', false);
+        } else{
+            checkBox.attr('checked', 'checked');
+            checkBox.prop('checked', true);
+        }
+
+    });
+
+
+    // $('input[type=checkbox]').click(function () {
+    //     if ($(this).attr('checked') === 'checked'){
+    //         $(this).removeAttr('checked');
+    //         $(this).prop('checked', false);
+    //     } else {
+    //         $(this).attr('checked', 'checked');
+    //         $(this).prop('checked', true)
+    //     }
+    //
+    // });
+
+
+    $('.delete_all_button').click(function () {
+
+        var form = $('.delete_mail_form');
+
+        form.submit(function (e) {
+            e.preventDefault();
+        });
+
+        var checkBoxId = $('input[type=checkbox]'),
+            count = [],
+            trash =$('.trash'),
+            noRead = $('.no_read');
+
+        checkBoxId.each(function () {
+            if ($(this).prop('checked') === true){
+                var trId = $('.tr_'+$(this).val());
+                count.push(trId);
+            }
+        });
+
+        trash.html(Number(trash.html()) + count.length);
+        noRead.html(Number(noRead.html()) - count.length);
+
+
+        var formData = new FormData(form[0]),
+            url = form.attr('action');
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            crossDomain: true,
+            data: formData,
+
+            beforeSuccess: function(){
+                $('.loading, .overlay').fadeIn();
+            },
+
+            success: function (data) {
+
+                if (data.status === 1){
+
+                    $('.msg').removeClass('hidden alert-danger').addClass('alert-success').html(data.msg);
+
+                    var checkBoxId = $('input[type=checkbox]');
+
+                    checkBoxId.each(function () {
+                        if ($(this).prop('checked') === true){
+                            var trId = $('.tr_'+$(this).val());
+                            trId.remove();
+                        }
+                    });
+                } else {
+                    $('.msg').removeClass('hidden alert-success').addClass('alert-danger').html(data.msg);
+                }
+
+                $('.loading, .overlay').fadeOut();
+
+            }
+        });
+
+        trId.remove();
+
+
     });
 
 });

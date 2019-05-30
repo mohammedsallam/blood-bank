@@ -27,7 +27,7 @@
                 <div class="box-body no-padding" style="">
                     <ul class="nav nav-pills nav-stacked">
                         <li class="active">
-                            <a href="{{url(route('contacts.index'))}}"><i class="fa fa fa-envelope text-yellow"></i> Inbox
+                            <a href="{{url(route('contacts.index'))}}"><i class="fa fa-envelope text-yellow"></i> Inbox
                                 <span class="label label-primary pull-right no_read">{{$contacts->count()}}</span>
                             </a>
                         </li>
@@ -35,7 +35,10 @@
                                 <span class="label label-primary pull-right read">{{$reads->count()}}</span>
                             </a>
                         </li>
-                        <li><a href="{{url(route('trash'))}}"><i class="fa fa-trash text-red"></i> Trash</a></li>
+                        <li><a href="{{url(route('trash'))}}"><i class="fa fa-trash text-red"></i> Trash
+                                <span class="label label-primary pull-right trash">{{$trash->count()}}</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.box-body -->
@@ -63,18 +66,23 @@
                         <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                         </button>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+                            <button type="button" class="btn btn-default btn-sm delete_all_button"><i class="fa fa-trash-o"></i></button>
                         </div>
                         <!-- /.btn-group -->
                         <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
                     </div>
+                    <div class="alert alert-success msg hidden"></div>
                     <div class="table-responsive mailbox-messages">
                         <table class="table table-hover table-striped">
                             <tbody>
+                            {!! Form::open(['route' => 'contacts.delete' , 'method' => 'DELETE', 'class' => 'delete_mail_form']) !!}
+
                             @if ($reads->count() > 0)
                                 @foreach ($reads as $read)
                                     <tr class="tr_{{$read->id}}">
-                                        <td><input type="checkbox"></td>
+                                        <td>
+                                            <input type="checkbox" name="id[]" class="check_delete" value="{{$read->id}}">
+                                        </td>
                                         <td><i class="fa fa-envelope-open text-dark mark_as_unread" style="cursor:pointer;" title="Mark as un read" data-id="{{$read->id}}" data-url="{{url(route('contacts.edit', $read->id))}}"></i></td>
                                         <td class="mailbox-name"><a href="{{url(route('contacts.show', $read->id))}}">{{$read->name}}</a></td>
                                         <td class="mailbox-subject"><b><a href="{{url(route('contacts.show', $read->id))}}">{{\Illuminate\Support\Str::limit($read->title, 50)}}</a></b>
@@ -84,9 +92,12 @@
                                 @endforeach
                                 @else
                                 <tr>
-                                    <td class="text-center text-red"><i class="fa fa-envelope-open"></i> No Mails is read</td>
+                                    <td class="text-center text-red"><i class="fa fa-envelope-open"></i> No Mails in read</td>
                                 </tr>
                             @endif
+
+                            {!! Form::close() !!}
+
                             </tbody>
                         </table>
                     </div>
@@ -98,7 +109,7 @@
                         <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="fa fa-square-o"></i>
                         </button>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default btn-sm"><i class="fa fa-trash-o"></i></button>
+                            <button type="button" class="btn btn-default btn-sm delete_all_button"><i class="fa fa-trash-o"></i></button>
                         </div>
                         <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
                     </div>
