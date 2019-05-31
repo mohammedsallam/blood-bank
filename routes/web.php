@@ -30,9 +30,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('movetounread/{id}', 'ContactsController@moveToUnRead')->name('movetounread');
     Route::get('trash', 'ContactsController@trash')->name('trash');
 
+    Route::resource('settings', 'SettingsController');
+    Route::resource('admin', 'AdminController');
+
+
 });
 
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('forget-password', 'AdminController@forgetPassword')->name('password.forget');
+Route::post('forget-password', 'AdminController@resetPassword')->name('password.reset');

@@ -8,7 +8,6 @@ $(document).ready(function () {
     /**
      * Delete client
      */
-
     $('.delete_client_button').click(function (e) {
         e.preventDefault()
         if (confirm('Do you want delete?')){
@@ -65,7 +64,6 @@ $(document).ready(function () {
     /**
      * Active/de active client
      */
-
     $('.active_client_link').click(function (e) {
         e.preventDefault();
         var url = $(this).attr('href');
@@ -83,7 +81,6 @@ $(document).ready(function () {
     /**
      * Get government details by id and show it on modal
      */
-
     $('a.update_government_link').click(function () {
 
         $.ajax({
@@ -109,7 +106,6 @@ $(document).ready(function () {
     /**
      * Create government
      */
-
     $('.create_government_button').click(function () {
 
 
@@ -152,14 +148,12 @@ $(document).ready(function () {
             }
         });
 
-    })
-
+    });
 
 
     /**
      * Update government
      */
-
     $('.update_government_button').click(function () {
 
 
@@ -201,13 +195,12 @@ $(document).ready(function () {
             }
         });
 
-    })
+    });
 
 
     /**
      * Delete government
      */
-
     $('.delete_government_button').click(function (e) {
         e.preventDefault()
         if (confirm('Do you want delete?')){
@@ -261,10 +254,10 @@ $(document).ready(function () {
     });
 
 
+
     /**
      * Get city details by id and show it on modal
      */
-
     $('a.update_city_link').click(function () {
 
         $.ajax({
@@ -286,10 +279,10 @@ $(document).ready(function () {
 
     });
 
+
     /**
      * Create city
      */
-
     $('.create_city_button').click(function () {
 
 
@@ -332,13 +325,12 @@ $(document).ready(function () {
             }
         });
 
-    })
+    });
 
 
     /**
      * Update city
      */
-
     $('.update_city_button').click(function () {
 
 
@@ -380,13 +372,12 @@ $(document).ready(function () {
             }
         });
 
-    })
+    });
 
 
     /**
      * Delete city
      */
-
     $('.delete_city_button').click(function (e) {
         e.preventDefault()
         if (confirm('Do you want delete?')){
@@ -443,7 +434,6 @@ $(document).ready(function () {
     /**
      * Get category details by id and show it on modal
      */
-
     $('a.update_category_link').click(function () {
 
         $.ajax({
@@ -469,7 +459,6 @@ $(document).ready(function () {
     /**
      * Create category
      */
-
     $('.create_category_button').click(function () {
 
 
@@ -518,7 +507,6 @@ $(document).ready(function () {
     /**
      * Update category
      */
-
     $('.update_category_button').click(function () {
 
 
@@ -560,13 +548,12 @@ $(document).ready(function () {
             }
         });
 
-    })
+    });
 
 
     /**
      * Delete city
      */
-
     $('.delete_category_button').click(function (e) {
         e.preventDefault()
         if (confirm('Do you want delete?')){
@@ -618,10 +605,10 @@ $(document).ready(function () {
         }
     });
 
+
     /**
      * Get post details by id and show it on modal
      */
-
     $('a.posts_model_link').click(function () {
 
        $.ajax({
@@ -647,7 +634,6 @@ $(document).ready(function () {
     /**
      * Show post image
      */
-
     $(document).on('change', '.img', function () {
         var reader = new FileReader();
 
@@ -664,16 +650,15 @@ $(document).ready(function () {
     /**
      * Delete image
      */
-
     $(document).on('click', '.delete_img', function(){
         $('.img_content').html('');
         $('input#img').val('')
     });
 
+
     /**
      * Create post
      */
-
     $('.create_post_button').click(function () {
 
         var form = $('.create_post_form'),
@@ -721,7 +706,6 @@ $(document).ready(function () {
     /**
      * Update post
      */
-
     $('.update_post_button').click(function () {
 
         var form = $('.update_post_form'),
@@ -768,12 +752,10 @@ $(document).ready(function () {
 
 
     /**
-     * Delete post
+     * Delete post confirmation
      */
-
     $('.delete_post_button').click(function (e) {
         e.preventDefault()
-
         if (confirm('Do you want delete?')){
 
             var id = $(this).attr('id'),
@@ -823,17 +805,12 @@ $(document).ready(function () {
             });
 
         }
-
-
-
-
     });
 
 
     /**
      * Mark message as read
      */
-
     $('.mark_as_read').click(function () {
 
         var id = $(this).data('id'),
@@ -860,7 +837,6 @@ $(document).ready(function () {
     /**
      * Mark message as unread
      */
-
     $('.mark_as_unread').click(function () {
 
         var id = $(this).data('id'),
@@ -882,10 +858,10 @@ $(document).ready(function () {
 
     });
 
+
     /**
      * Mark message as read
      */
-
     $('.mark_as_read_trash').click(function () {
 
         var id = $(this).data('id'),
@@ -912,7 +888,6 @@ $(document).ready(function () {
     /**
      * Mark message as unread
      */
-
     $('.mark_as_unread_trash').click(function () {
 
         var id = $(this).data('id'),
@@ -938,7 +913,6 @@ $(document).ready(function () {
     /**
      * Toggle checkbox select
      */
-
     $('.checkbox-toggle').click(function () {
 
         var checkBox = $('input[type="checkbox"]');
@@ -965,6 +939,9 @@ $(document).ready(function () {
     // });
 
 
+    /**
+     * Delete messages to trash
+     */
     $('.delete_all_button').click(function () {
 
         var form = $('.delete_mail_form');
@@ -1043,6 +1020,10 @@ $(document).ready(function () {
 
     });
 
+
+    /**
+     * Delete messages from trash
+     */
     $('.shift_delete').click(function () {
 
         var form = $('.shift_delete_mail_form');
@@ -1106,5 +1087,159 @@ $(document).ready(function () {
 
 
     });
+
+
+    /**
+     * Add settings
+     */
+    $('.add_settings').click(function () {
+        var form = $('.add_settings_form'),
+            url = form.attr('action'),
+            formData = new FormData(form[0]);
+            form.submit(function (e) {
+                e.preventDefault();
+            });
+
+            $.ajax({
+                url: url,
+                type: 'post',
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                crossDomain: true,
+                data: formData,
+                success: function (data) {
+
+                    if (data.status === 0){
+                        $('.settings_error').removeClass('hidden').html(data.msg);
+                        $('.settings_success').addClass('hidden');
+                    } else {
+
+                        window.location.reload();
+
+                    }
+                }
+            })
+    });
+
+
+    /**
+     * Update settings
+     */
+    $('.update_settings').click(function () {
+        var form = $('.update_settings_form'),
+            url = form.attr('action'),
+            formData = new FormData(form[0]);
+        form.submit(function (e) {
+            e.preventDefault();
+        });
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            crossDomain: true,
+            data: formData,
+            success: function (data) {
+
+                if (data.status === 0){
+                    $('.settings_error').removeClass('hidden').html(data.msg);
+                    $('.settings_success').addClass('hidden');
+                } else {
+
+                    $('.settings_success').removeClass('hidden').html(data.msg);
+                    $('.settings_error').addClass('hidden');
+
+                    $('html, body').animate({
+                        scrollTop: 0
+                    })
+
+                }
+            }
+        })
+    });
+
+
+    /**
+     * Change password for admin
+     */
+
+    $('.change_password_button').click(function () {
+
+        var form = $('.change_password_form'),
+            url = form.attr('action'),
+            formData = new FormData(form[0]);
+
+        form.submit(function (e) {
+            e.preventDefault();
+        });
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            crossDomain: true,
+            data: formData,
+
+            success: function (data) {
+
+                if (data.status === 0){
+                    $('.admin_error').removeClass('hidden').html(data.msg);
+                    $('.admin_success').addClass('hidden');
+                } else {
+
+                    $('.admin_success').removeClass('hidden').html(data.msg);
+                    $('.admin_error').addClass('hidden');
+                    $('.change_password_form input[type=password]').each(function () {
+                        $(this).val('');
+                    })
+                }
+            }
+        })
+
+
+    })
+
+    $('.reset_password_button').click(function () {
+
+        var form = $('.reset_password_form'),
+            url = form.attr('action'),
+            formData = new FormData(form[0]);
+
+        form.submit(function (e) {
+            e.preventDefault();
+        });
+
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            crossDomain: true,
+            data: formData,
+
+            success: function (data) {
+
+                if (data.status === 0){
+                    $('.admin_error').removeClass('hidden').html(data.msg);
+                    $('.admin_success').addClass('hidden');
+                } else {
+
+                    $('.admin_success').removeClass('hidden').html(data.msg);
+                    $('.admin_error').addClass('hidden');
+                    $('.reset_password_form input[type=password], input[type=email]').each(function () {
+                        $(this).val('');
+                    })
+                }
+            }
+        })
+
+
+    })
 
 });

@@ -13,18 +13,18 @@
         </div>
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Posts</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href=""><i class="fa fa-circle-o"></i> Posts</a></li>
-                    <li><a href=""><i class="fa fa-circle-o"></i> Categories</a></li>
-                </ul>
-            </li>
+            {{--<li class="treeview">--}}
+                {{--<a href="#">--}}
+                    {{--<i class="fa fa-dashboard"></i> <span>Posts</span>--}}
+                    {{--<span class="pull-right-container">--}}
+                        {{--<i class="fa fa-angle-left pull-right"></i>--}}
+                    {{--</span>--}}
+                {{--</a>--}}
+                {{--<ul class="treeview-menu">--}}
+                    {{--<li><a href=""><i class="fa fa-circle-o"></i> Posts</a></li>--}}
+                    {{--<li><a href=""><i class="fa fa-circle-o"></i> Categories</a></li>--}}
+                {{--</ul>--}}
+            {{--</li>--}}
             <li><a href="{{url(route('clients.index'))}}"><i class="fa fa-users"></i> <span>Clients</span></a></li>
             <li><a href="{{url(route('governments.index'))}}"><i class="fa fa-list"></i> <span>Governments</span></a></li>
             <li><a href="{{url(route('cities.index'))}}"><i class="fa fa-home"></i> <span>Cities</span></a></li>
@@ -43,6 +43,7 @@
                     <li><a href="{{url(route('trash'))}}"><i class="fa fa-trash"></i> Trash</a></li>
                 </ul>
             </li>
+            <li><a href="{{url(route('settings.index'))}}"><i class="fa fa-cogs"></i> <span>Settings</span></a></li>
             <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Settings</span></a></li>
         </ul>
     </section>

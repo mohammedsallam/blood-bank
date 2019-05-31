@@ -36,11 +36,11 @@
                         </li>
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a data-toggle="modal" data-target="#admin_modal" href="#" class="btn btn-default btn-flat"><i class="fa fa-lock"></i> Change password</a>
                             </div>
                             <div class="pull-right">
                                 {!! Form::open(['route' => 'logout', 'method' => 'post']) !!}
-                                <button class="btn btn-default btn-flat">Sign out</button>
+                                <button class="btn btn-default btn-flat"><i class="fa fa-sign-out"></i> Sign out</button>
                                 {!! Form::close() !!}
                             </div>
                         </li>
@@ -54,3 +54,30 @@
         </div>
     </nav>
 </header>
+
+<div class="modal fade admin_modal" id="admin_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Change password</h4>
+            </div>
+            <div class="alert alert-success hidden admin_success"></div>
+            <div class="alert alert-danger hidden admin_error"></div>
+            <div class="modal-body">
+                {!! Form::open(['route' => ['admin.update', auth()->user()->id], 'method' => 'PUT', 'class' => 'change_password_form']) !!}
+                <div class="form-group">
+                    <input type="password" name="password" class="form-control" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm password">
+                </div>
+                {!! Form::close() !!}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary change_password_button">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

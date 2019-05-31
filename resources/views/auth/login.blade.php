@@ -72,11 +72,9 @@
                 <!-- /.col -->
             </div>
         </form>
-        @if (Route::has('password.request'))
-            <a class="btn btn-link" href="{{ route('password.request') }}">
-                {{ __('Forgot Your Password?') }}
-            </a>
-        @endif
+        <a class="btn btn-link" href="{{ route('password.forget') }}">
+            {{ __('Forgot Your Password?') }}
+        </a>
     </div>
     <!-- /.login-box-body -->
 </div>
